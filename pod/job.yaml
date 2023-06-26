@@ -1,0 +1,24 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: batch-job
+spec:
+  completions: 5
+  parallelism: 2
+  activeDeadlineSeconds: 20
+  template:
+    metadata:
+      labels:
+        app: batch-job
+    spec:
+      restartPolicy: Never
+      containers:
+      - name: main
+        image: luksa/batch-job
+        resources:
+          requests:
+            memory: 512Mi
+            cpu: 250m
+          limits:
+            memory: 512Mi
+            cpu: 250m

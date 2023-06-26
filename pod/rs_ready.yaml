@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: kubia
+  labels:
+    app: kubia
+    creation_method: maunal
+    env: rs
+spec:
+  # modify replicas according to your case
+  replicas: 1
+  selector:
+    matchExpressions:
+    - key: app
+      operator: In
+      values:
+      - kubia
+    - key: env
+      operator: Exists
+  template:
+    metadata:
+      labels:
+        app: kubia
+        creation_method: maunal
+        env: rs
+    spec:
+      containers:
+      - name: kubia
+        image: luksa/kubia
+        readinessProbe:
+          exec:
+            command:
+            - ls
+            - /var/ready
+        resources:
+          requests:
+            memory: 512Mi
+            cpu: 250m
+          limits:
+            memory: 512Mi
+            cpu: 250m
+        ports:
+        - name: http
+          containerPort: 8080
+        - name: https
+          containerPort: 8443
