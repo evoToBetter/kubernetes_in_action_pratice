@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Pod
+metadata: 
+  name: fortunens
+spec:
+  containers: 
+  - image: luksa/fortune:env
+    env:
+    - name: INTERVAL
+      value: "3"
+    name: html-generator

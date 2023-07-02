@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: Pod
+metadata: 
+  name: fortune-pod-configmap-part-volume
+spec:
+  containers: 
+  - image: nginx:alpine
+    name: web-server
+    volumeMounts:
+    - name: config
+      mountPath: /etc/nginx/conf.d/default.conf # whole path
+      subPath: default.conf # to override default config
+      readOnly: true
+  volumes:
+  - name: config
+    configMap:
+      name: fortune-config-multiple
+      defaultMode: 0664
+      items:
+      - key: my-nginx-config.conf
+        path: default.conf 
+        
