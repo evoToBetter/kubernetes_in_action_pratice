@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-privileged
+spec:
+  containers:
+  - image: alpine
+    name: main
+    command: ["/bin/sleep","99999999"]
+    securityContext:
+      privileged: true
+      
