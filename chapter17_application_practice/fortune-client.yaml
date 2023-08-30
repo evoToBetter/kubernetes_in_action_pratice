@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Pod
+metadata: 
+  name: requests-pod-default
+spec:
+  initContainers:
+  - name: init
+    image: busybox
+    command:
+    - sh
+    - -c
+    - 'while true; do echo "waiting for fortune service to come up..."; wget http://fortune -q -T 1 -O /dev/null >/dev/null 2>/dev/null && break; sleep 1; done; echo "service is up! staring main container!"'
+  containers:
+  - image: busybox
+    command: ["dd", "if=/dev/zero","of=/dev/null"]
+    name: main
